@@ -1,1 +1,7 @@
 #!/usr/bin/env bash
+
+download_dir="$HOME/Downloads"
+
+inotifywait -m -e close_write -e moved_to --format "%f" "$download_dir" | while read -r filename; do
+    echo "$filename"
+done
