@@ -1,6 +1,6 @@
 # dlorg – Downloads organizer
 
-`dlorg` is a bash script that watches `~/Downloads` and automatically moves new files into folders based on their file extension (for example `.pdf` → `pdfs/`, `.png` → `images/`, unknown → `other/`).
+`dlorg` is a bash script that watches `~/Downloads` and automatically moves new files into folders based on their file extension (for example `.pdf` → `pdfs/`, `.png` → `images/`, `.docx` → `docs/`, unknown → `other/`). Extensions are matched case-insensitively, so `.PNG` and `.png` end up in the same folder.
 
 It uses `inotifywait` to react when a file is created or moved into the folder, a `case` statement to choose the folder, and `mkdir -p` + `mv` to move the file.
 
