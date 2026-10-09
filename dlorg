@@ -17,6 +17,7 @@ inotifywait -m -e close_write -e moved_to --format "%f" "$download_dir" | while 
     case "$filename" in
         *.jpg|*.jpeg|*.png|*.gif) folder="images" ;;
         *.pdf) folder="pdfs" ;;
+        *.docx|*.doc|*.odt) folder="docs" ;;
         *.txt|*.md) folder="text" ;;
         *.zip|*.tar|*.gz) folder="archives" ;;
         *.mp4|*.mov) folder="videos" ;;
