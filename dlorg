@@ -13,8 +13,11 @@ inotifywait -m -e close_write -e moved_to --format "%f" "$download_dir" | while 
         continue
     fi
 
+    # lowercase copy of the name so .PNG and .png are treated the same
+    lowercase_name="${filename,,}"
+
     # choose folder based on file extension
-    case "$filename" in
+    case "$lowercase_name" in
         *.jpg|*.jpeg|*.png|*.gif) folder="images" ;;
         *.pdf) folder="pdfs" ;;
         *.docx|*.doc|*.odt) folder="docs" ;;
