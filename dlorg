@@ -1,7 +1,30 @@
 #!/usr/bin/env bash
 
+# folder to watch
 download_dir="$HOME/Downloads"
 
+# wait for new files (created, renamed or moved in) and read their names one by one
 inotifywait -m -e close_write -e moved_to --format "%f" "$download_dir" | while read -r filename; do
-    echo "$filename"
+
+    filepath="$download_dir/$filename"
+
+    # skip anything that is not a regular file (e.g. folders)
+    if [[ ! -f "$filepath" ]]; then
+        continue
+    fi
+
+    # choose folder based on file extension
+    case "$filename" in
+        *.jpg|*.jpeg|*.png|*.gif) folder="images" ;;
+        *.pdf) folder="pdfs" ;;
+        *.txt|*.md) folder="text" ;;
+        *.zip|*.tar|*.gz) folder="archives" ;;
+        *.mp4|*.mov) folder="videos" ;;
+        *) folder="other" ;;
+    esac
+
+    # create the folder if needed and move the file there
+    mkdir -p "$download_dir/$folder"
+    mv "$filepath" "$download_dir/$folder/"
+    echo "Moved $filename to $folder/"
 done
